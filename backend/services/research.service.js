@@ -1,18 +1,15 @@
+import { runInvestmentAgent } from "../langchain/investmentAgent.js";
+
 export const generateResearchReport = async (company) => {
+  const report = await runInvestmentAgent(company);
+
   return {
-    company,
-    decision: "WATCHLIST",
-    confidence: 74,
-    summary: `${company} appears fundamentally strong, but additional analysis is required before making an investment recommendation.`,
-    positives: [
-      "Recognized market presence",
-      "Healthy long-term growth outlook",
-      "Consistent business operations",
-    ],
-    risks: [
-      "Valuation concerns",
-      "Competitive market",
-      "Macroeconomic uncertainty",
-    ],
+    company: report.company || company,
+    decision: report.decision || "WATCHLIST",
+    confidence: report.confidence || 60,
+    summary: report.summary || "No summary available.",
+    positives: report.positives || [],
+    risks: report.risks || [],
+    reasoning: report.reasoning || "No reasoning available.",
   };
 };

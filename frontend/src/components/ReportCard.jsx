@@ -27,6 +27,13 @@ function ReportCard({ report }) {
 
       <p className="report-summary">{report.summary}</p>
 
+      {report.reasoning && (
+        <div className="reasoning-box">
+          <h3>Final Reasoning</h3>
+          <p>{report.reasoning}</p>
+        </div>
+      )}
+
       <div className="report-grid">
         <div>
           <h3>Positive Points</h3>
