@@ -1,10 +1,14 @@
-import dotenv from "dotenv";
-import app from "./app.js";
+import axios from "axios";
 
-dotenv.config();
+const API_BASE_URL = "http://localhost:5000/api";
 
-const PORT = process.env.PORT || 5000;
-
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+const api = axios.create({
+  baseURL: API_BASE_URL,
 });
+
+export const researchCompany = async (company) => {
+  const response = await api.post("/research", { company });
+  return response.data;
+};
+
+export default api;

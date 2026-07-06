@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function SearchBox() {
+function SearchBox({ onSearch, loading }) {
   const [company, setCompany] = useState("");
 
   const handleSubmit = (e) => {
@@ -11,7 +11,7 @@ function SearchBox() {
       return;
     }
 
-    console.log("Company searched:", company);
+    onSearch(company);
   };
 
   return (
@@ -23,7 +23,9 @@ function SearchBox() {
         onChange={(e) => setCompany(e.target.value)}
       />
 
-      <button type="submit">Analyze</button>
+      <button type="submit" disabled={loading}>
+        {loading ? "Analyzing..." : "Analyze"}
+      </button>
     </form>
   );
 }

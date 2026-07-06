@@ -1,6 +1,26 @@
+import { useState } from "react";
 import SearchBox from "../components/SearchBox";
+import ReportCard from "../components/ReportCard";
+import { researchCompany } from "../services/api";
 
 function Home() {
+  const [report, setReport] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  const handleResearch = async (company) => {
+    try {
+      setLoading(true);
+      setReport(null);
+
+      const response = await researchCompany(company);
+      setReport(response.data);
+    } catch (error) {
+      alert("Unable to research company. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <main className="page">
       <nav className="navbar">
@@ -20,40 +40,46 @@ function Home() {
             invest/pass decision.
           </p>
 
-          <SearchBox />
+          <SearchBox onSearch={handleResearch} loading={loading} />
 
           <div className="examples">
             <span>Try:</span>
-            <button>Infosys</button>
-            <button>Tata Motors</button>
-            <button>Tesla</button>
+            <button onClick={() => handleResearch("Infosys")}>Infosys</button>
+            <button onClick={() => handleResearch("Tata Motors")}>
+              Tata Motors
+            </button>
+            <button onClick={() => handleResearch("Tesla")}>Tesla</button>
           </div>
         </div>
 
-        <aside className="preview-card">
-          <div className="preview-header">
-            <div>
-              <p className="muted">Sample decision</p>
-              <h3>Tata Motors</h3>
+        {!report && (
+          <aside className="preview-card">
+            <div className="preview-header">
+              <div>
+                <p className="muted">Sample decision</p>
+                <h3>Tata Motors</h3>
+              </div>
+              <span className="status">Watchlist</span>
             </div>
-            <span className="status">Watchlist</span>
-          </div>
 
-          <div className="score-row">
-            <span>Confidence</span>
-            <strong>74/100</strong>
-          </div>
+            <div className="score-row">
+              <span>Confidence</span>
+              <strong>74/100</strong>
+            </div>
 
-          <div className="progress">
-            <div></div>
-          </div>
+            <div className="progress">
+              <div></div>
+            </div>
 
-          <div className="insight-list">
-            <p>Strong EV and SUV growth momentum</p>
-            <p>Debt reduction improving financial health</p>
-            <p>Valuation and cyclicality remain key risks</p>
-          </div>
-        </aside>
+            <div className="insight-list">
+              <p>Strong EV and SUV growth momentum</p>
+              <p>Debt reduction improving financial health</p>
+              <p>Valuation and cyclicality remain key risks</p>
+            </div>
+          </aside>
+        )}
+
+        {report && <ReportCard report={report} />}
       </section>
     </main>
   );
