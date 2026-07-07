@@ -24,7 +24,7 @@ function Home() {
   return (
     <main className="page">
       <nav className="navbar">
-        <div className="logo">InvestIQ</div>
+        <div className="logo">InvestOnly</div>
         <div className="nav-pill">Research Agent</div>
       </nav>
 
