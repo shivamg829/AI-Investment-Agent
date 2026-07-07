@@ -3,7 +3,7 @@ import { PromptTemplate } from "@langchain/core/prompts";
 import { investmentResearchPrompt } from "./prompts.js";
 import { extractJsonFromText } from "../utils/parseJson.js";
 
-export const runInvestmentAgent = async (company) => {
+export const runInvestmentAgent = async (company, researchContext) => {
   const model = new ChatGoogleGenerativeAI({
     model: "gemini-1.5-flash",
     apiKey: process.env.GEMINI_API_KEY,
@@ -14,6 +14,7 @@ export const runInvestmentAgent = async (company) => {
 
   const formattedPrompt = await prompt.format({
     company,
+    researchContext,
   });
 
   const response = await model.invoke(formattedPrompt);

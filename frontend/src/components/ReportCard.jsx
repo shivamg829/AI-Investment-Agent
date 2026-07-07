@@ -34,6 +34,15 @@ function ReportCard({ report }) {
         </div>
       )}
 
+      {report.recentSignals?.length > 0 && (
+        <div className="reasoning-box">
+          <h3>Recent Signals</h3>
+          {report.recentSignals.map((item, index) => (
+            <p key={index}>{item}</p>
+          ))}
+        </div>
+      )}
+
       <div className="report-grid">
         <div>
           <h3>Positive Points</h3>
@@ -53,6 +62,22 @@ function ReportCard({ report }) {
           ))}
         </div>
       </div>
+
+      {report.sources?.length > 0 && (
+        <div className="sources-box">
+          <h3>Sources</h3>
+          {report.sources.map((source, index) => (
+            <a
+              key={index}
+              href={source.url}
+              target="_blank"
+              rel="noreferrer"
+            >
+              {source.title}
+            </a>
+          ))}
+        </div>
+      )}
     </section>
   );
 }
