@@ -1,16 +1,28 @@
-import { tavily } from "@tavily/core";
-
-const client = tavily({
-  apiKey: process.env.TAVILY_API_KEY,
-});
-
 export const searchCompanyNews = async (company) => {
-  const response = await client.search(`${company} latest business news financial performance investment outlook`, {
-    maxResults: 5,
-    searchDepth: "basic",
+  if (!process.env.TAVILY_API_KEY) {
+    throw new Error("TAVILY_API_KEY is missing");
+  }
+
+  const response = await fetch("https://api.tavily.com/search", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${process.env.TAVILY_API_KEY}`,
+    },
+    body: JSON.stringify({
+      query: `${company} latest financial performance news investment outlook`,
+      search_depth: "basic",
+      max_results: 5,
+    }),
   });
 
-  return response.results.map((item) => ({
+  if (!response.ok) {
+    throw new Error("Tavily search request failed");
+  }
+
+  const data = await response.json();
+
+  return (data.results || []).map((item) => ({
     title: item.title,
     url: item.url,
     content: item.content,
