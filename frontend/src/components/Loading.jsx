@@ -1,14 +1,12 @@
 function Loading() {
   return (
     <div className="loading-card">
-      <div className="spinner"></div>
+      <div className="spinner" />
 
-      <h3>Analyzing Company...</h3>
-
-      <p>
-        Gathering company information, analyzing risks, and preparing your
-        investment report.
-      </p>
+      <div className="loading-copy">
+        <h3>Analyzing company data</h3>
+        <p>Gathering company information, scanning risk signals, and preparing your report.</p>
+      </div>
     </div>
   );
 }

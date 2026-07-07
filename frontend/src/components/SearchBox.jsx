@@ -5,19 +5,22 @@ function SearchBox({ onSearch, loading }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const trimmed = company.trim();
+    if (!trimmed) return;
 
-    if (!company.trim()) return;
-
-    onSearch(company);
-
+    onSearch(trimmed);
     setCompany("");
   };
 
   return (
     <form className="search-box" onSubmit={handleSubmit}>
+      <label htmlFor="company-search" className="sr-only">
+        Company name
+      </label>
       <input
+        id="company-search"
         type="text"
-        placeholder="Enter company name, e.g. Infosys, Tesla, Reliance"
+        placeholder="Infosys, Tesla, Reliance..."
         value={company}
         onChange={(e) => setCompany(e.target.value)}
       />
