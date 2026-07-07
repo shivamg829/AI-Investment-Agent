@@ -9,7 +9,7 @@ AI tools were used throughout the development process as required by the assignm
 ## AI Tools Used
 
 * ChatGPT
-* Google Gemini
+* Groq (Llama)
 * LangChain Documentation
 
 ---
@@ -23,7 +23,7 @@ AI assisted with:
 * Creating backend architecture
 * Writing initial React components
 * Building Express APIs
-* Integrating LangChain with Gemini
+* Integrating LangChain with Groq
 * Prompt design
 * Debugging runtime errors
 * Improving UI
@@ -35,7 +35,7 @@ AI assisted with:
 
 ### Project Planning
 
-> Build an AI Investment Research Agent using React, Node.js, Express, LangChain.js, and Gemini. Suggest a clean project structure and implementation plan.
+> Build an AI Investment Research Agent using React, Node.js, Express, LangChain.js, and Groq. Suggest a clean project structure and implementation plan.
 
 ### Backend Development
 
@@ -102,7 +102,7 @@ Priority was given to:
 During this project I learned:
 
 * Integrating React with an Express backend
-* Using LangChain with Gemini
+* Using LangChain with Groq
 * Working with external APIs
 * Handling LLM responses safely
 * Structuring a full-stack AI application

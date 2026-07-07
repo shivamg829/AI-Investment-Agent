@@ -32,7 +32,7 @@ The report includes:
 * Node.js
 * Express.js
 * LangChain.js
-* Google Gemini
+* Groq (Llama)
 * Tavily Search API
 
 ---
@@ -93,7 +93,7 @@ Create a `.env` file.
 
 ```env
 PORT=5000
-GEMINI_API_KEY=YOUR_GEMINI_API_KEY
+GROQ_API_KEY=YOUR_GROQ_API_KEY
 TAVILY_API_KEY=YOUR_TAVILY_API_KEY
 ```
 
@@ -125,8 +125,8 @@ The application will be available at:
 1. User enters a company name.
 2. React sends the request to the Express API.
 3. Backend retrieves recent company information using Tavily.
-4. LangChain sends the research context to Gemini.
-5. Gemini generates a structured investment analysis.
+4. LangChain sends the research context to Groq.
+5. Groq generates a structured investment analysis.
 6. The backend processes the response and returns it to the frontend.
 7. The report is displayed to the user.
 
@@ -167,8 +167,9 @@ Response
 ## Design Decisions
 
 * React and Express were selected for simplicity and familiarity.
-* LangChain is used to interact with Gemini.
+* LangChain is used to interact with Groq.
 * Tavily provides recent web context for better responses.
+
 * The backend separates routes, controllers, and services to keep the code modular.
 * The application focuses on explainable results rather than financial prediction.
 

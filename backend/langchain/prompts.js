@@ -12,19 +12,18 @@ Your task:
 3. Identify risks
 4. Give an investment decision
 5. Give a confidence score
-6. Mention important recent signals from the research context
+6. Mention recent signals from the research context
 
 Important:
 - Do not give personal financial advice.
 - Use simple and clear language.
-- Be realistic, not overly positive.
+- Be realistic.
 - Return only valid JSON.
 - Do not include markdown.
-- If web context is limited, clearly say that analysis is based on limited information.
 
 Return JSON in this exact format:
 
-{
+{{
   "company": "Company name",
   "decision": "INVEST or WATCHLIST or PASS",
   "confidence": 0,
@@ -45,5 +44,5 @@ Return JSON in this exact format:
     "recent signal 3"
   ],
   "reasoning": "Final reasoning behind the decision"
-}
+}}
 `;

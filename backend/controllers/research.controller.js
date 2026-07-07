@@ -18,11 +18,12 @@ export const researchCompany = async (req, res) => {
       data: report,
     });
   } catch (error) {
-    console.error(error);
+    console.error("Research controller error:", error.message || error);
 
     return res.status(500).json({
       success: false,
       message: "Internal Server Error",
+      ...(process.env.NODE_ENV !== "production" && { error: error.message }),
     });
   }
 };
