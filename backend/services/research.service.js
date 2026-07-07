@@ -1,6 +1,9 @@
 import { runInvestmentAgent } from "../langchain/investmentAgent.js";
 import { searchCompanyNews } from "./search.service.js";
-
+import {
+  calculateInvestmentScore,
+  getDecisionFromScore,
+} from "../utils/scoring.js";
 const buildFallbackReport = (company) => {
   return {
     company,
@@ -30,7 +33,7 @@ const formatResearchContext = (newsItems) => {
   return newsItems
     .map(
       (item, index) =>
-        `${index + 1}. Title: ${item.title}\nURL: ${item.url}\nContext: ${item.content}`
+        `${index + 1}. Title: ${item.title}\nURL: ${item.url}\nContext: ${item.content}`,
     )
     .join("\n\n");
 };
@@ -44,8 +47,18 @@ export const generateResearchReport = async (company) => {
 
     return {
       company: report.company || company,
-      decision: report.decision || "WATCHLIST",
-      confidence: Number(report.confidence) || 60,
+      decision: getDecisionFromScore(
+        calculateInvestmentScore({
+          positives: report.positives,
+          risks: report.risks,
+          recentSignals: report.recentSignals,
+        }),
+      ),
+      confidence: calculateInvestmentScore({
+        positives: report.positives,
+        risks: report.risks,
+        recentSignals: report.recentSignals,
+      }),
       summary: report.summary || "No summary available.",
       positives: Array.isArray(report.positives) ? report.positives : [],
       risks: Array.isArray(report.risks) ? report.risks : [],
