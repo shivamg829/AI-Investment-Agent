@@ -1,11 +1,18 @@
 function ReportCard({ report }) {
   if (!report) return null;
 
+  const confidenceColor =
+    report.confidence >= 80
+      ? "#16a34a"
+      : report.confidence >= 60
+        ? "#f59e0b"
+        : "#dc2626";
+
   return (
     <section className="report-card">
-      <div className="report-top">
+      <div className="report-header">
         <div>
-          <p className="muted">Research result</p>
+          <p className="section-title">Investment Report</p>
           <h2>{report.company}</h2>
         </div>
 
@@ -14,68 +21,72 @@ function ReportCard({ report }) {
         </span>
       </div>
 
-      <div className="confidence-box">
-        <div className="score-row">
-          <span>Confidence Score</span>
-          <strong>{report.confidence}/100</strong>
+      <div className="confidence-card">
+        <div
+          className="confidence-circle"
+          style={{ borderColor: confidenceColor }}
+        >
+          {report.confidence}
         </div>
 
-        <div className="progress">
-          <div style={{ width: `${report.confidence}%` }}></div>
+        <div>
+          <h3>Confidence Score</h3>
+          <p>
+            Overall confidence generated using AI analysis and our investment
+            scoring engine.
+          </p>
         </div>
       </div>
 
-      <p className="report-summary">{report.summary}</p>
+      <div className="summary-card">
+        <h3>Summary</h3>
+
+        <p>{report.summary}</p>
+      </div>
+
+      <div className="grid-two">
+        <div className="card">
+          <h3>Positive Factors</h3>
+
+          <ul>
+            {report.positives.map((item, index) => (
+              <li key={index}>✅ {item}</li>
+            ))}
+          </ul>
+        </div>
+
+        <div className="card">
+          <h3>Risk Factors</h3>
+
+          <ul>
+            {report.risks.map((item, index) => (
+              <li key={index}>⚠️ {item}</li>
+            ))}
+          </ul>
+        </div>
+      </div>
 
       {report.reasoning && (
-        <div className="reasoning-box">
-          <h3>Final Reasoning</h3>
+        <div className="card">
+          <h3>AI Reasoning</h3>
+
           <p>{report.reasoning}</p>
         </div>
       )}
 
-      {report.recentSignals?.length > 0 && (
-        <div className="reasoning-box">
-          <h3>Recent Signals</h3>
-          {report.recentSignals.map((item, index) => (
-            <p key={index}>{item}</p>
-          ))}
-        </div>
-      )}
-
-      <div className="report-grid">
-        <div>
-          <h3>Positive Points</h3>
-          {report.positives.map((item, index) => (
-            <p key={index} className="point positive">
-              {item}
-            </p>
-          ))}
-        </div>
-
-        <div>
-          <h3>Risks</h3>
-          {report.risks.map((item, index) => (
-            <p key={index} className="point risk">
-              {item}
-            </p>
-          ))}
-        </div>
-      </div>
-
       {report.sources?.length > 0 && (
-        <div className="sources-box">
+        <div className="card">
           <h3>Sources</h3>
-          {report.sources.map((source, index) => (
-            <a
-              key={index}
-              href={source.url}
-              target="_blank"
-              rel="noreferrer"
-            >
-              {source.title}
-            </a>
-          ))}
+
+          <ul>
+            {report.sources.map((source, index) => (
+              <li key={index}>
+                <a href={source.url} target="_blank" rel="noreferrer">
+                  {source.title}
+                </a>
+              </li>
+            ))}
+          </ul>
         </div>
       )}
     </section>

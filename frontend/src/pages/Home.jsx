@@ -2,20 +2,26 @@ import { useState } from "react";
 import SearchBox from "../components/SearchBox";
 import ReportCard from "../components/ReportCard";
 import { researchCompany } from "../services/api";
-
+import Loading from "../components/Loading";
 function Home() {
   const [report, setReport] = useState(null);
   const [loading, setLoading] = useState(false);
-
+  const [error, setError] = useState("");
   const handleResearch = async (company) => {
     try {
       setLoading(true);
+      setError("");
       setReport(null);
 
       const response = await researchCompany(company);
-      setReport(response.data);
-    } catch (error) {
-      alert("Unable to research company. Please try again.");
+
+      if (response.success) {
+        setReport(response.data);
+      } else {
+        setError("Unable to analyze the company.");
+      }
+    } catch (err) {
+      setError("Something went wrong. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -52,7 +58,7 @@ function Home() {
           </div>
         </div>
 
-        {!report && (
+        {!loading && !error && !report && (
           <aside className="preview-card">
             <div className="preview-header">
               <div>
@@ -79,7 +85,15 @@ function Home() {
           </aside>
         )}
 
-        {report && <ReportCard report={report} />}
+        {!loading && !error && !report && (
+          <aside className="preview-card">...</aside>
+        )}
+
+        {loading && <Loading />}
+
+        {error && <div className="error-card">{error}</div>}
+
+        {!loading && report && <ReportCard report={report} />}
       </section>
     </main>
   );

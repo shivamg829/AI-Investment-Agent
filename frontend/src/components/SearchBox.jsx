@@ -6,12 +6,11 @@ function SearchBox({ onSearch, loading }) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!company.trim()) {
-      alert("Please enter a company name");
-      return;
-    }
+    if (!company.trim()) return;
 
     onSearch(company);
+
+    setCompany("");
   };
 
   return (
