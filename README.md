@@ -115,8 +115,8 @@ npm run dev
 
 The application will be available at:
 
-* Frontend: http://localhost:5173
-* Backend: http://localhost:5000
+* Frontend: http://localhost:5173 || https://ai-investment-agent-sepia.vercel.app/
+* Backend: http://localhost:5000 || https://ai-investment-agent-8ghg.onrender.com
 
 ---
 
