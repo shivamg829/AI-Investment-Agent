@@ -14,20 +14,24 @@ function SearchBox({ onSearch, loading }) {
 
   return (
     <form className="search-box" onSubmit={handleSubmit}>
-      <label htmlFor="company-search" className="sr-only">
-        Company name
-      </label>
-      <input
-        id="company-search"
-        type="text"
-        placeholder="Infosys, Tesla, Reliance..."
-        value={company}
-        onChange={(e) => setCompany(e.target.value)}
-      />
+      <div className="search-input-group">
+        <label htmlFor="company-search" className="sr-only">
+          Company name
+        </label>
+        <input
+          id="company-search"
+          type="text"
+          placeholder="Infosys, Tesla, Reliance..."
+          value={company}
+          onChange={(e) => setCompany(e.target.value)}
+        />
+      </div>
 
       <button type="submit" disabled={loading}>
         {loading ? "Analyzing..." : "Analyze"}
       </button>
+
+      <p className="search-hint">Try a public company name to generate a report.</p>
     </form>
   );
 }

@@ -6,16 +6,9 @@ function ReportCard({ report }) {
   const sources = Array.isArray(report.sources) ? report.sources : [];
 
   const decisionText = (report.decision ?? "Review").toString();
-
   const confidence = Number.isFinite(report.confidence) ? report.confidence : 0;
-
   const confidenceColor =
-    confidence >= 80
-      ? "#16a34a"
-      : confidence >= 60
-      ? "#f59e0b"
-      : "#dc2626";
-
+    confidence >= 80 ? "#16a34a" : confidence >= 60 ? "#f59e0b" : "#dc2626";
   const decisionClass = `decision ${decisionText.toLowerCase()}`;
 
   return (
@@ -27,9 +20,15 @@ function ReportCard({ report }) {
         <div>
           <p className="section-title">Investment Report</p>
           <h2>{report.company}</h2>
+          <p className="report-subtitle">
+            AI-generated outlook based on recent company signals and market context.
+          </p>
         </div>
 
-        <span className={decisionClass}>{decisionText}</span>
+        <div className="report-pill-stack">
+          <span className={decisionClass}>{decisionText}</span>
+          <span className="meta-pill">{confidence}% confidence</span>
+        </div>
       </div>
 
       <div className="confidence-card">
@@ -37,14 +36,14 @@ function ReportCard({ report }) {
           className="confidence-circle"
           style={{ borderColor: confidenceColor }}
         >
-          {report.confidence}
+          {confidence}
         </div>
 
         <div>
           <h3>Confidence Score</h3>
           <p>
-            The confidence rating is based on company data, risk signals, and
-            our AI research process.
+            The confidence rating is based on company data, risk signals, and our
+            AI research process.
           </p>
         </div>
       </div>
@@ -54,7 +53,7 @@ function ReportCard({ report }) {
         <p>{report.summary || "No summary available."}</p>
       </div>
 
-      <div className="grid-two">
+      <div className="report-grid">
         <div className="card">
           <h3>Positive Factors</h3>
           {positives.length > 0 ? (
@@ -83,23 +82,19 @@ function ReportCard({ report }) {
       </div>
 
       {report.reasoning && (
-        <div className="card">
+        <div className="card reasoning-card">
           <h3>AI Reasoning</h3>
           <p>{report.reasoning}</p>
         </div>
       )}
 
       {sources.length > 0 && (
-        <div className="card">
+        <div className="card sources-card">
           <h3>Sources</h3>
           <ul>
             {sources.map((source, index) => (
               <li key={index}>
-                <a
-                  href={source.url}
-                  target="_blank"
-                  rel="noreferrer noopener"
-                >
+                <a href={source.url} target="_blank" rel="noreferrer noopener">
                   {source.title || source.url}
                 </a>
               </li>
