@@ -5,7 +5,17 @@ import researchRoutes from "./routes/research.routes.js";
 
 const app = express();
 
-app.use(cors());
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173",
+      "https://your-vercel-app.vercel.app"
+    ],
+    methods: ["GET", "POST"],
+    credentials: true,
+  })
+);
+
 app.use(express.json());
 
 app.use("/api", healthRoutes);
@@ -14,7 +24,7 @@ app.use("/api", researchRoutes);
 app.get("/", (req, res) => {
   res.status(200).json({
     success: true,
-    message: "Welcome to AI Investment Research Agent API",
+    message: "InvestOnly API is running",
   });
 });
 
